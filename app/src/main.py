@@ -1,6 +1,6 @@
+import os
 from flask import Flask
 from controllers.house_prediction_controller import house_prediction_api
-import os
 
 app = Flask(__name__)
 
