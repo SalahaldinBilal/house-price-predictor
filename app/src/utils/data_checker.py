@@ -1,4 +1,5 @@
 from typing import Any
+import numpy as np
 import pandas as pd
 
 columns = ['MSSubClass', 'MSZoning', 'LotFrontage', 'LotArea', 'Street', 'Alley',
@@ -17,6 +18,13 @@ columns = ['MSSubClass', 'MSZoning', 'LotFrontage', 'LotArea', 'Street', 'Alley'
            'PavedDrive', 'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', '3SsnPorch',
            'ScreenPorch', 'PoolArea', 'PoolQC', 'Fence', 'MiscFeature', 'MiscVal',
            'MoSold', 'YrSold', 'SaleType', 'SaleCondition']
+
+columns_to_log = ['MSSubClass', 'LotFrontage', 'LotArea', 'OverallCond', 'MasVnrArea',
+                  'BsmtFinSF1', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF', '1stFlrSF',
+                  '2ndFlrSF', 'LowQualFinSF', 'GrLivArea', 'BsmtHalfBath', 'HalfBath',
+                  'KitchenAbvGr', 'TotRmsAbvGrd', 'Fireplaces', 'GarageArea',
+                  'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', '3SsnPorch',
+                  'ScreenPorch', 'PoolArea', 'MiscVal']
 
 SINGLE_PREDICTION_SCHEMA = {
     '$schema': 'http://json-schema.org/draft-07/schema#',
@@ -108,7 +116,8 @@ SINGLE_PREDICTION_SCHEMA = {
 
 
 def json_to_df(json: Any) -> pd.DataFrame:
-    """converts json object to pandas DataFrame
+    """converts json object to pandas DataFrame, 
+    and does appropriate actions on the df
 
     Args:
         json (Any): The json object to convert
@@ -116,4 +125,6 @@ def json_to_df(json: Any) -> pd.DataFrame:
     Returns:
         DataFrame: the result DataFrame
     """
-    return pd.json_normalize(json)
+    df = pd.json_normalize(json)
+    df[columns_to_log] = np.log1p(df[columns_to_log])
+    return df

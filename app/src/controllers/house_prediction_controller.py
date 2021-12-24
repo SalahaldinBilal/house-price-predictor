@@ -4,6 +4,7 @@ from flask import jsonify, Blueprint, request
 from flask_expects_json import expects_json
 from sklearn.pipeline import Pipeline
 from utils.data_checker import json_to_df, SINGLE_PREDICTION_SCHEMA
+import numpy as np
 
 house_prediction_api: Blueprint = Blueprint(
     'house_prediction_api', __name__, url_prefix='/api/v1')
@@ -20,7 +21,8 @@ def model_predict():
     """ Predicts one sample and returns the prediction
     """
     json: Any = request.json
+    prediction = pipeline.predict(json_to_df(json))[0]
     response = {
-        "predicted_value": pipeline.predict(json_to_df(json))[0]
+        "predicted_value": np.expm1(prediction)
     }
     return jsonify(response), 200
