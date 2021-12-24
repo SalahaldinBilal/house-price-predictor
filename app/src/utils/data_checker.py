@@ -116,7 +116,7 @@ SINGLE_PREDICTION_SCHEMA = {
 
 
 def json_to_df(json: Any) -> pd.DataFrame:
-    """converts json object to pandas DataFrame, 
+    """converts json object to pandas DataFrame,
     and does appropriate actions on the df
 
     Args:
@@ -125,6 +125,6 @@ def json_to_df(json: Any) -> pd.DataFrame:
     Returns:
         DataFrame: the result DataFrame
     """
-    df = pd.json_normalize(json)
-    df[columns_to_log] = np.log1p(df[columns_to_log])
-    return df
+    data_frame = pd.json_normalize(json)
+    data_frame[columns_to_log] = np.log1p(data_frame[columns_to_log])
+    return data_frame
