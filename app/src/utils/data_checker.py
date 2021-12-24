@@ -107,5 +107,13 @@ SINGLE_PREDICTION_SCHEMA = {
 }
 
 
-def json_to_df(json: Any):
+def json_to_df(json: Any) -> pd.DataFrame:
+    """converts json object to pandas DataFrame
+
+    Args:
+        json (Any): The json object to convert
+
+    Returns:
+        DataFrame: the result DataFrame
+    """
     return pd.json_normalize(json)
