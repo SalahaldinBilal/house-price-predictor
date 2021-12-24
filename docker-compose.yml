@@ -1,0 +1,10 @@
+version: '3'
+services:
+  bike-sharing-predictor:
+    build: .
+    ports:
+      - "7000:7000"
+    volumes:
+      - .:/app/src
+    environment:
+      - PYTHONUNBUFFERED=1
